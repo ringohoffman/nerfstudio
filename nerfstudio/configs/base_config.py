@@ -14,12 +14,11 @@
 
 """Base Configs"""
 
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, List, Literal, Optional, Tuple, Type
+from typing import Any, Generic, List, Literal, Optional, Tuple, Type, TypeVar
 
 # model instances
 from nerfstudio.utils import writer
@@ -29,7 +28,7 @@ from nerfstudio.utils import writer
 class PrintableConfig:
     """Printable Config defining str function"""
 
-    def __str__(self):
+    def __str__(self) -> str:
         lines = [self.__class__.__name__ + ":"]
         for key, val in vars(self).items():
             if isinstance(val, Tuple):
@@ -42,14 +41,17 @@ class PrintableConfig:
         return "\n    ".join(lines)
 
 
+T = TypeVar("T")
+
+
 # Base instantiate configs
 @dataclass
-class InstantiateConfig(PrintableConfig):
+class InstantiateConfig(Generic[T], PrintableConfig):
     """Config class for instantiating an the class specified in the _target attribute."""
 
-    _target: Type
+    _target: Type[T]
 
-    def setup(self, **kwargs) -> Any:
+    def setup(self, **kwargs: Any) -> T:
         """Returns the instantiated object using the config."""
         return self._target(self, **kwargs)
 
@@ -74,10 +76,10 @@ class MachineConfig(PrintableConfig):
 
 
 @dataclass
-class LocalWriterConfig(InstantiateConfig):
+class LocalWriterConfig(InstantiateConfig[writer.LocalWriter]):
     """Local Writer config"""
 
-    _target: Type = writer.LocalWriter
+    _target: Type[writer.LocalWriter] = writer.LocalWriter
     """target class to instantiate"""
     enable: bool = False
     """if True enables local logging, else disables"""
@@ -93,7 +95,7 @@ class LocalWriterConfig(InstantiateConfig):
     max_log_size: int = 10
     """maximum number of rows to print before wrapping. if 0, will print everything."""
 
-    def setup(self, banner_messages: Optional[List[str]] = None, **kwargs) -> Any:
+    def setup(self, banner_messages: Optional[List[str]] = None, **kwargs: Any) -> writer.LocalWriter:
         """Instantiate local writer
 
         Args:

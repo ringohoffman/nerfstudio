@@ -28,7 +28,7 @@ from torchmetrics.functional import structural_similarity_index_measure
 from torchmetrics.image import PeakSignalNoiseRatio
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 
-from nerfstudio.cameras.camera_optimizers import CameraOptimizer, CameraOptimizerConfig
+from nerfstudio.cameras.camera_optimizers import CameraOptimizerConfig
 from nerfstudio.cameras.rays import RayBundle, RaySamples
 from nerfstudio.engine.callbacks import TrainingCallback, TrainingCallbackAttributes, TrainingCallbackLocation
 from nerfstudio.field_components.field_heads import FieldHeadNames
@@ -55,7 +55,7 @@ from nerfstudio.utils import colormaps
 class NerfactoModelConfig(ModelConfig):
     """Nerfacto Model Config"""
 
-    _target: Type = field(default_factory=lambda: NerfactoModel)
+    _target: Type[NerfactoModel] = field(default_factory=lambda: NerfactoModel)
     near_plane: float = 0.05
     """How far along the ray to start sampling."""
     far_plane: float = 1000.0
@@ -168,9 +168,7 @@ class NerfactoModel(Model):
             implementation=self.config.implementation,
         )
 
-        self.camera_optimizer: CameraOptimizer = self.config.camera_optimizer.setup(
-            num_cameras=self.num_train_data, device="cpu"
-        )
+        self.camera_optimizer = self.config.camera_optimizer.setup(num_cameras=self.num_train_data, device="cpu")
         self.density_fns = []
         num_prop_nets = self.config.num_proposal_iterations
         # Build the proposal network(s)

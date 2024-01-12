@@ -37,7 +37,7 @@ from torch.nn import Parameter
 from torchmetrics.image import PeakSignalNoiseRatio
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 
-from nerfstudio.cameras.camera_optimizers import CameraOptimizer, CameraOptimizerConfig
+from nerfstudio.cameras.camera_optimizers import CameraOptimizerConfig
 from nerfstudio.cameras.cameras import Cameras
 from nerfstudio.data.scene_box import OrientedBox
 from nerfstudio.engine.callbacks import TrainingCallback, TrainingCallbackAttributes, TrainingCallbackLocation
@@ -108,7 +108,7 @@ def projection_matrix(znear, zfar, fovx, fovy, device: Union[str, torch.device] 
 class GaussianSplattingModelConfig(ModelConfig):
     """Gaussian Splatting Model Config"""
 
-    _target: Type = field(default_factory=lambda: GaussianSplattingModel)
+    _target: Type[GaussianSplattingModel] = field(default_factory=lambda: GaussianSplattingModel)
     warmup_length: int = 500
     """period of steps where refinement is turned off"""
     refine_every: int = 100
@@ -213,9 +213,7 @@ class GaussianSplattingModel(Model):
         self.crop_box: Optional[OrientedBox] = None
         self.back_color = torch.zeros(3)
 
-        self.camera_optimizer: CameraOptimizer = self.config.camera_optimizer.setup(
-            num_cameras=self.num_train_data, device="cpu"
-        )
+        self.camera_optimizer = self.config.camera_optimizer.setup(num_cameras=self.num_train_data, device="cpu")
 
     @property
     def colors(self):

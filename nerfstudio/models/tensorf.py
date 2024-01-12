@@ -28,6 +28,7 @@ from torchmetrics.functional import structural_similarity_index_measure
 from torchmetrics.image import PeakSignalNoiseRatio
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 
+from nerfstudio.cameras.camera_optimizers import CameraOptimizerConfig
 from nerfstudio.cameras.rays import RayBundle
 from nerfstudio.configs.config_utils import to_immutable_dict
 from nerfstudio.engine.callbacks import (
@@ -53,14 +54,13 @@ from nerfstudio.model_components.renderers import (
 from nerfstudio.model_components.scene_colliders import AABBBoxCollider
 from nerfstudio.models.base_model import Model, ModelConfig
 from nerfstudio.utils import colormaps, colors, misc
-from nerfstudio.cameras.camera_optimizers import CameraOptimizer, CameraOptimizerConfig
 
 
 @dataclass
 class TensoRFModelConfig(ModelConfig):
     """TensoRF model config"""
 
-    _target: Type = field(default_factory=lambda: TensoRFModel)
+    _target: Type[TensoRFModel] = field(default_factory=lambda: TensoRFModel)
     """target class to instantiate"""
     init_resolution: int = 128
     """initial render resolution"""
@@ -262,9 +262,7 @@ class TensoRFModel(Model):
             raise RuntimeError("TV reg not supported for CP decomposition")
 
         # (optional) camera optimizer
-        self.camera_optimizer: CameraOptimizer = self.config.camera_optimizer.setup(
-            num_cameras=self.num_train_data, device="cpu"
-        )
+        self.camera_optimizer = self.config.camera_optimizer.setup(num_cameras=self.num_train_data, device="cpu")
 
     def get_param_groups(self) -> Dict[str, List[Parameter]]:
         param_groups = {}
