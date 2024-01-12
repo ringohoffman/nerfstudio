@@ -212,7 +212,7 @@ class Pipeline(nn.Module):
 class VanillaPipelineConfig(InstantiateConfig):
     """Configuration for pipeline instantiation"""
 
-    _target: Type = field(default_factory=lambda: VanillaPipeline)
+    _target: Type[VanillaPipeline] = field(default_factory=lambda: VanillaPipeline)
     """target class to instantiate"""
     datamanager: DataManagerConfig = field(default_factory=DataManagerConfig)
     """specifies the datamanager config"""

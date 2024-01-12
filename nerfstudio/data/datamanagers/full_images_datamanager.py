@@ -46,7 +46,7 @@ from nerfstudio.utils.rich_utils import CONSOLE
 
 @dataclass
 class FullImageDatamanagerConfig(DataManagerConfig):
-    _target: Type = field(default_factory=lambda: FullImageDatamanager)
+    _target: Type[FullImageDatamanager] = field(default_factory=lambda: FullImageDatamanager)
     dataparser: AnnotatedDataParserUnion = field(default_factory=NerfstudioDataParserConfig)
     camera_res_scale_factor: float = 1.0
     """The scale factor for scaling spatial data such as images, mask, semantics

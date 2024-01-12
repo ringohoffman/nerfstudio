@@ -13,6 +13,9 @@
 # limitations under the License.
 
 """Data parser for ARKitScenes dataset"""
+
+from __future__ import annotations
+
 import math
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -24,11 +27,7 @@ import torch
 
 from nerfstudio.cameras import camera_utils
 from nerfstudio.cameras.cameras import Cameras, CameraType
-from nerfstudio.data.dataparsers.base_dataparser import (
-    DataParser,
-    DataParserConfig,
-    DataparserOutputs,
-)
+from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs
 from nerfstudio.data.scene_box import SceneBox
 
 
@@ -67,7 +66,7 @@ class ARKitScenesDataParserConfig(DataParserConfig):
     This dataparser uses 3D detection subset of the ARKitScenes dataset.
     """
 
-    _target: Type = field(default_factory=lambda: ARKitScenes)
+    _target: Type[ARKitScenes] = field(default_factory=lambda: ARKitScenes)
     """target class to instantiate"""
     data: Path = Path("data/ARKitScenes/3dod/Validation/41069021")
     """Path to ARKitScenes folder with densely extracted scenes."""

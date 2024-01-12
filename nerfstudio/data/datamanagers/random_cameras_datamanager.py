@@ -24,8 +24,8 @@ from typing import Dict, List, Tuple, Type, Union
 
 import torch
 from rich.progress import Console
-from torch.nn import Parameter
 from torch import Tensor
+from torch.nn import Parameter
 from typing_extensions import Literal
 
 from nerfstudio.cameras.cameras import Cameras
@@ -154,7 +154,7 @@ def random_train_pose(
 class RandomCamerasDataManagerConfig(DataManagerConfig):
     """Configuration for data manager that does not load from a dataset. Instead, it generates random poses."""
 
-    _target: Type = field(default_factory=lambda: RandomCamerasDataManager)
+    _target: Type[RandomCamerasDataManager] = field(default_factory=lambda: RandomCamerasDataManager)
     train_resolution: int = 64
     """Training resolution"""
     eval_resolution: int = 64

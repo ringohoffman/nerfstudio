@@ -16,6 +16,8 @@ Data parser for pre-prepared datasets for all cameras, with no additional proces
 Optional fields - semantics, mask_filenames, cameras.distortion_params, cameras.times
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Type
@@ -24,12 +26,7 @@ import numpy as np
 import torch
 
 from nerfstudio.cameras.cameras import Cameras
-from nerfstudio.data.dataparsers.base_dataparser import (
-    DataParser,
-    DataParserConfig,
-    DataparserOutputs,
-    Semantics,
-)
+from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs, Semantics
 from nerfstudio.data.scene_box import SceneBox
 
 
@@ -37,7 +34,7 @@ from nerfstudio.data.scene_box import SceneBox
 class MinimalDataParserConfig(DataParserConfig):
     """Minimal dataset config"""
 
-    _target: Type = field(default_factory=lambda: MinimalDataParser)
+    _target: Type[MinimalDataParser] = field(default_factory=lambda: MinimalDataParser)
     """target class to instantiate"""
     data: Path = Path("/home/nikhil/nerfstudio-main/tests/data/lego_test/minimal_parser")
 

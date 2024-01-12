@@ -48,7 +48,7 @@ from nerfstudio.utils.rich_utils import CONSOLE
 class ParallelDataManagerConfig(VanillaDataManagerConfig):
     """Config for a `ParallelDataManager` which reads data in multiple processes"""
 
-    _target: Type = field(default_factory=lambda: ParallelDataManager)
+    _target: Type[ParallelDataManager] = field(default_factory=lambda: ParallelDataManager)
     """Target class to instantiate."""
     num_processes: int = 1
     """Number of processes to use for train data loading. More than 1 doesn't result in that much better performance"""

@@ -31,7 +31,7 @@ from nerfstudio.cameras.cameras import Cameras
 from nerfstudio.cameras.rays import RayBundle
 from nerfstudio.configs.base_config import InstantiateConfig
 from nerfstudio.configs.config_utils import to_immutable_dict
-from nerfstudio.data.scene_box import SceneBox, OrientedBox
+from nerfstudio.data.scene_box import OrientedBox, SceneBox
 from nerfstudio.engine.callbacks import TrainingCallback, TrainingCallbackAttributes
 from nerfstudio.model_components.scene_colliders import NearFarCollider
 
@@ -41,7 +41,7 @@ from nerfstudio.model_components.scene_colliders import NearFarCollider
 class ModelConfig(InstantiateConfig):
     """Configuration for model instantiation"""
 
-    _target: Type = field(default_factory=lambda: Model)
+    _target: Type[Model] = field(default_factory=lambda: Model)
     """target class to instantiate"""
     enable_collider: bool = True
     """Whether to create a scene collider to filter rays."""

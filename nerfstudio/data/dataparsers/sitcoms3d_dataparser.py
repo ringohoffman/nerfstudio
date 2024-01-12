@@ -27,12 +27,7 @@ from typing import Type
 import torch
 
 from nerfstudio.cameras.cameras import Cameras, CameraType
-from nerfstudio.data.dataparsers.base_dataparser import (
-    DataParser,
-    DataParserConfig,
-    DataparserOutputs,
-    Semantics,
-)
+from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs, Semantics
 from nerfstudio.data.scene_box import SceneBox
 from nerfstudio.utils.io import load_from_json
 
@@ -41,7 +36,7 @@ from nerfstudio.utils.io import load_from_json
 class Sitcoms3DDataParserConfig(DataParserConfig):
     """sitcoms3D dataset parser config"""
 
-    _target: Type = field(default_factory=lambda: Sitcoms3D)
+    _target: Type[Sitcoms3D] = field(default_factory=lambda: Sitcoms3D)
     """target class to instantiate"""
     data: Path = Path("data/sitcoms3d/TBBT-big_living_room")
     """Directory specifying location of data."""

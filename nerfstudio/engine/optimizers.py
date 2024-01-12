@@ -33,7 +33,7 @@ from nerfstudio.utils import writer
 class OptimizerConfig(base_config.PrintableConfig):
     """Basic optimizer config with RAdam"""
 
-    _target: Type = torch.optim.Adam
+    _target: Type[torch.optim.Optimizer] = torch.optim.Adam
     """The optimizer class to use."""
     lr: float = 0.0005
     """The learning rate to use."""
@@ -56,7 +56,7 @@ class OptimizerConfig(base_config.PrintableConfig):
 class AdamOptimizerConfig(OptimizerConfig):
     """Basic optimizer config with Adam"""
 
-    _target: Type = torch.optim.Adam
+    _target: Type[torch.optim.Adam] = torch.optim.Adam
     weight_decay: float = 0
     """The weight decay to use."""
 
@@ -65,7 +65,7 @@ class AdamOptimizerConfig(OptimizerConfig):
 class RAdamOptimizerConfig(OptimizerConfig):
     """Basic optimizer config with RAdam"""
 
-    _target: Type = torch.optim.RAdam
+    _target: Type[torch.optim.RAdam] = torch.optim.RAdam
     weight_decay: float = 0
     """The weight decay to use."""
 

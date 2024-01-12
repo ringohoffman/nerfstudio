@@ -21,8 +21,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, Tuple, Type
 
-import torch
 import numpy as np
+import torch
 
 from nerfstudio.cameras.rays import RayBundle
 from nerfstudio.model_components import losses
@@ -35,7 +35,7 @@ from nerfstudio.utils import colormaps
 class DepthNerfactoModelConfig(NerfactoModelConfig):
     """Additional parameters for depth supervision."""
 
-    _target: Type = field(default_factory=lambda: DepthNerfactoModel)
+    _target: Type[DepthNerfactoModel] = field(default_factory=lambda: DepthNerfactoModel)
     depth_loss_mult: float = 1e-3
     """Lambda of the depth loss."""
     is_euclidean_depth: bool = False

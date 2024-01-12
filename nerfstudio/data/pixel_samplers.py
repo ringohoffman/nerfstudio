@@ -16,22 +16,17 @@
 Code for sampling pixels.
 """
 
+from __future__ import annotations
+
 import random
 from dataclasses import dataclass, field
-from typing import (
-    Dict,
-    Optional,
-    Type,
-    Union,
-)
+from typing import Dict, Optional, Type, Union
 
 import torch
 from jaxtyping import Int
 from torch import Tensor
 
-from nerfstudio.configs.base_config import (
-    InstantiateConfig,
-)
+from nerfstudio.configs.base_config import InstantiateConfig
 from nerfstudio.data.utils.pixel_sampling_utils import erode_mask
 
 
@@ -39,7 +34,7 @@ from nerfstudio.data.utils.pixel_sampling_utils import erode_mask
 class PixelSamplerConfig(InstantiateConfig):
     """Configuration for pixel sampler instantiation."""
 
-    _target: Type = field(default_factory=lambda: PixelSampler)
+    _target: Type[PixelSampler] = field(default_factory=lambda: PixelSampler)
     """Target class to instantiate."""
     num_rays_per_batch: int = 4096
     """Number of rays to sample per batch."""
@@ -321,7 +316,7 @@ class PixelSampler:
 class PatchPixelSamplerConfig(PixelSamplerConfig):
     """Config dataclass for PatchPixelSampler."""
 
-    _target: Type = field(default_factory=lambda: PatchPixelSampler)
+    _target: Type[PatchPixelSampler] = field(default_factory=lambda: PatchPixelSampler)
     """Target class to instantiate."""
     patch_size: int = 32
     """Side length of patch. This must be consistent in the method
@@ -407,7 +402,7 @@ class PatchPixelSampler(PixelSampler):
 class PairPixelSamplerConfig(PixelSamplerConfig):
     """Config dataclass for PairPixelSampler."""
 
-    _target: Type = field(default_factory=lambda: PairPixelSampler)
+    _target: Type[PairPixelSampler] = field(default_factory=lambda: PairPixelSampler)
     """Target class to instantiate."""
     radius: int = 2
     """max distance between pairs of pixels."""

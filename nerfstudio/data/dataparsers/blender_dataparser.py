@@ -24,11 +24,7 @@ import numpy as np
 import torch
 
 from nerfstudio.cameras.cameras import Cameras, CameraType
-from nerfstudio.data.dataparsers.base_dataparser import (
-    DataParser,
-    DataParserConfig,
-    DataparserOutputs,
-)
+from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs
 from nerfstudio.data.scene_box import SceneBox
 from nerfstudio.utils.colors import get_color
 from nerfstudio.utils.io import load_from_json
@@ -38,7 +34,7 @@ from nerfstudio.utils.io import load_from_json
 class BlenderDataParserConfig(DataParserConfig):
     """Blender dataset parser config"""
 
-    _target: Type = field(default_factory=lambda: Blender)
+    _target: Type[Blender] = field(default_factory=lambda: Blender)
     """target class to instantiate"""
     data: Path = Path("data/blender/lego")
     """Directory specifying location of data."""

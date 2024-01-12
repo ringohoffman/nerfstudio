@@ -17,6 +17,8 @@ Field for SDF based model, rather then estimating density to generate a surface,
 a signed distance function (SDF) for surface representation is used to help with extracting high fidelity surfaces
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from typing import Dict, Literal, Optional, Type
 
@@ -62,7 +64,7 @@ class LearnedVariance(nn.Module):
 class SDFFieldConfig(FieldConfig):
     """SDF Field Config"""
 
-    _target: Type = field(default_factory=lambda: SDFField)
+    _target: Type[SDFField] = field(default_factory=lambda: SDFField)
     num_layers: int = 8
     """Number of layers for geometric network"""
     hidden_dim: int = 256

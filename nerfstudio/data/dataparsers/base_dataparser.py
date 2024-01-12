@@ -115,7 +115,7 @@ class DataparserOutputs:
 class DataParserConfig(cfg.InstantiateConfig):
     """Basic dataset config"""
 
-    _target: Type = field(default_factory=lambda: DataParser)
+    _target: Type[DataParser] = field(default_factory=lambda: DataParser)
     """_target: target class to instantiate"""
     data: Path = Path()
     """Directory specifying location of data."""

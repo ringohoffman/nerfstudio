@@ -27,33 +27,16 @@ from torch.nn import Parameter
 from typing_extensions import Literal
 
 from nerfstudio.cameras.rays import RayBundle
-from nerfstudio.engine.callbacks import (
-    TrainingCallback,
-    TrainingCallbackAttributes,
-    TrainingCallbackLocation,
-)
+from nerfstudio.engine.callbacks import TrainingCallback, TrainingCallbackAttributes, TrainingCallbackLocation
 from nerfstudio.field_components.field_heads import FieldHeadNames
 from nerfstudio.fields.density_fields import HashMLPDensityField
 from nerfstudio.fields.generfacto_field import GenerfactoField
-from nerfstudio.generative.stable_diffusion import StableDiffusion
 from nerfstudio.generative.deepfloyd import DeepFloyd
 from nerfstudio.generative.positional_text_embeddings import PositionalTextEmbeddings
-from nerfstudio.model_components.losses import (
-    MSELoss,
-    distortion_loss,
-    interlevel_loss,
-    orientation_loss,
-)
-from nerfstudio.model_components.ray_samplers import (
-    ProposalNetworkSampler,
-    UniformSampler,
-)
-from nerfstudio.model_components.renderers import (
-    AccumulationRenderer,
-    DepthRenderer,
-    NormalsRenderer,
-    RGBRenderer,
-)
+from nerfstudio.generative.stable_diffusion import StableDiffusion
+from nerfstudio.model_components.losses import MSELoss, distortion_loss, interlevel_loss, orientation_loss
+from nerfstudio.model_components.ray_samplers import ProposalNetworkSampler, UniformSampler
+from nerfstudio.model_components.renderers import AccumulationRenderer, DepthRenderer, NormalsRenderer, RGBRenderer
 from nerfstudio.model_components.scene_colliders import AABBBoxCollider, SphereCollider
 from nerfstudio.model_components.shaders import LambertianShader, NormalsShader
 from nerfstudio.models.base_model import Model, ModelConfig
@@ -64,7 +47,7 @@ from nerfstudio.utils import colormaps, math, misc
 class GenerfactoModelConfig(ModelConfig):
     """Generfacto model config"""
 
-    _target: Type = field(default_factory=lambda: GenerfactoModel)
+    _target: Type[GenerfactoModel] = field(default_factory=lambda: GenerfactoModel)
     """target class to instantiate"""
     prompt: str = "a high quality photo of a ripe pineapple"
     """prompt for stable dreamfusion"""

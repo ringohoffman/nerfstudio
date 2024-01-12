@@ -50,7 +50,7 @@ from nerfstudio.utils.math import normalized_depth_scale_and_shift
 class SurfaceModelConfig(ModelConfig):
     """Surface Model Config"""
 
-    _target: Type = field(default_factory=lambda: SurfaceModel)
+    _target: Type[SurfaceModel] = field(default_factory=lambda: SurfaceModel)
     near_plane: float = 0.05
     """How far along the ray to start sampling."""
     far_plane: float = 4.0

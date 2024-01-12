@@ -16,8 +16,10 @@
 A pipeline that dynamically chooses the number of rays to sample.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import Literal, Type, Optional
+from typing import Literal, Optional, Type
 
 import torch
 from torch.cuda.amp.grad_scaler import GradScaler
@@ -30,7 +32,7 @@ from nerfstudio.pipelines.base_pipeline import VanillaPipeline, VanillaPipelineC
 class DynamicBatchPipelineConfig(VanillaPipelineConfig):
     """Dynamic Batch Pipeline Config"""
 
-    _target: Type = field(default_factory=lambda: DynamicBatchPipeline)
+    _target: Type[DynamicBatchPipeline] = field(default_factory=lambda: DynamicBatchPipeline)
     target_num_samples: int = 262144  # 1 << 18
     """The target number of samples to use for an entire batch of rays."""
     max_num_samples_per_ray: int = 1024  # 1 << 10

@@ -13,6 +13,9 @@
 # limitations under the License.
 
 """Data parser for ScanNet dataset"""
+
+from __future__ import annotations
+
 import math
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -24,11 +27,7 @@ import torch
 
 from nerfstudio.cameras import camera_utils
 from nerfstudio.cameras.cameras import Cameras, CameraType
-from nerfstudio.data.dataparsers.base_dataparser import (
-    DataParser,
-    DataParserConfig,
-    DataparserOutputs,
-)
+from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs
 from nerfstudio.data.scene_box import SceneBox
 
 
@@ -48,7 +47,7 @@ class ScanNetDataParserConfig(DataParserConfig):
         ├── pose/
     """
 
-    _target: Type = field(default_factory=lambda: ScanNet)
+    _target: Type[ScanNet] = field(default_factory=lambda: ScanNet)
     """target class to instantiate"""
     data: Path = Path("data/scannet/scene0423_02")
     """Path to ScanNet folder with densely extracted scenes."""

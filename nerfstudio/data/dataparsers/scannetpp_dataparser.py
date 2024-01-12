@@ -21,6 +21,7 @@ from typing import Literal, Type
 
 import numpy as np
 import torch
+
 from nerfstudio.cameras import camera_utils
 from nerfstudio.cameras.cameras import CAMERA_MODEL_TO_TYPE, Cameras, CameraType
 from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs
@@ -48,7 +49,7 @@ class ScanNetppDataParserConfig(DataParserConfig):
         ...
     """
 
-    _target: Type = field(default_factory=lambda: ScanNetpp)
+    _target: Type[ScanNetpp] = field(default_factory=lambda: ScanNetpp)
     """target class to instantiate"""
     data: Path = Path("scannetpp/410c470782")
     """Directory to the root of the data."""

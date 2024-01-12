@@ -16,6 +16,8 @@
 Base class for the graphs.
 """
 
+from __future__ import annotations
+
 from abc import abstractmethod
 from dataclasses import dataclass, field
 from typing import Dict, Optional, Tuple, Type
@@ -33,7 +35,7 @@ from nerfstudio.field_components.field_heads import FieldHeadNames
 class FieldConfig(InstantiateConfig):
     """Configuration for field instantiation"""
 
-    _target: Type = field(default_factory=lambda: Field)
+    _target: Type[Field] = field(default_factory=lambda: Field)
     """target class to instantiate"""
 
 

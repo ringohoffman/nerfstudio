@@ -54,16 +54,8 @@ from nerfstudio.configs.dataparser_configs import AnnotatedDataParserUnion
 from nerfstudio.data.dataparsers.base_dataparser import DataparserOutputs
 from nerfstudio.data.dataparsers.blender_dataparser import BlenderDataParserConfig
 from nerfstudio.data.datasets.base_dataset import InputDataset
-from nerfstudio.data.pixel_samplers import (
-    PatchPixelSamplerConfig,
-    PixelSampler,
-    PixelSamplerConfig,
-)
-from nerfstudio.data.utils.dataloaders import (
-    CacheDataloader,
-    FixedIndicesEvalDataloader,
-    RandIndicesEvalDataloader,
-)
+from nerfstudio.data.pixel_samplers import PatchPixelSamplerConfig, PixelSampler, PixelSamplerConfig
+from nerfstudio.data.utils.dataloaders import CacheDataloader, FixedIndicesEvalDataloader, RandIndicesEvalDataloader
 from nerfstudio.data.utils.nerfstudio_collate import nerfstudio_collate
 from nerfstudio.engine.callbacks import TrainingCallback, TrainingCallbackAttributes
 from nerfstudio.model_components.ray_generators import RayGenerator
@@ -108,7 +100,7 @@ class DataManagerConfig(InstantiateConfig):
     train/eval data at each iteration
     """
 
-    _target: Type = field(default_factory=lambda: DataManager)
+    _target: Type[DataManager] = field(default_factory=lambda: DataManager)
     """Target class to instantiate."""
     data: Optional[Path] = None
     """Source of data, may not be used by all models."""
@@ -314,7 +306,7 @@ class DataManager(nn.Module):
 class VanillaDataManagerConfig(DataManagerConfig):
     """A basic data manager for a ray-based model"""
 
-    _target: Type = field(default_factory=lambda: VanillaDataManager)
+    _target: Type[VanillaDataManager] = field(default_factory=lambda: VanillaDataManager)
     """Target class to instantiate."""
     dataparser: AnnotatedDataParserUnion = field(default_factory=BlenderDataParserConfig)
     """Specifies the dataparser used to unpack the data."""

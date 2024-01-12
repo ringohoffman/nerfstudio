@@ -13,6 +13,9 @@
 # limitations under the License.
 
 """Data parser for NuScenes dataset"""
+
+from __future__ import annotations
+
 import math
 import os
 from dataclasses import dataclass, field
@@ -25,11 +28,7 @@ import torch
 from nuscenes.nuscenes import NuScenes as NuScenesDatabase
 
 from nerfstudio.cameras.cameras import Cameras, CameraType
-from nerfstudio.data.dataparsers.base_dataparser import (
-    DataParser,
-    DataParserConfig,
-    DataparserOutputs,
-)
+from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs
 from nerfstudio.data.scene_box import SceneBox
 
 
@@ -58,7 +57,7 @@ class NuScenesDataParserConfig(DataParserConfig):
     To create these masks use nerfstudio/scripts/datasets/process_nuscenes_masks.py.
     """
 
-    _target: Type = field(default_factory=lambda: NuScenes)
+    _target: Type[NuScenes] = field(default_factory=lambda: NuScenes)
     """target class to instantiate"""
     data: Path = Path("scene-0103")  # TODO: rename to scene but keep checkpoint saving name?
     """Name of the scene."""

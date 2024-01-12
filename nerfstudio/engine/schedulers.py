@@ -15,6 +15,8 @@
 
 """Scheduler Classes"""
 
+from __future__ import annotations
+
 from abc import abstractmethod
 from dataclasses import dataclass, field
 from typing import Literal, Optional, Tuple, Type
@@ -35,7 +37,7 @@ from nerfstudio.configs.base_config import InstantiateConfig
 class SchedulerConfig(InstantiateConfig):
     """Basic scheduler config"""
 
-    _target: Type = field(default_factory=lambda: Scheduler)
+    _target: Type[Scheduler] = field(default_factory=lambda: Scheduler)
     """target class to instantiate"""
 
 
@@ -64,7 +66,7 @@ class Scheduler:
 class MultiStepSchedulerConfig(SchedulerConfig):
     """Config for multi step scheduler where lr decays by gamma every milestone"""
 
-    _target: Type = field(default_factory=lambda: MultiStepScheduler)
+    _target: Type[MultiStepScheduler] = field(default_factory=lambda: MultiStepScheduler)
     """target class to instantiate"""
     max_steps: int = 1000000
     """The maximum number of steps."""
@@ -92,7 +94,7 @@ class MultiStepScheduler(Scheduler):
 class ExponentialDecaySchedulerConfig(SchedulerConfig):
     """Config for exponential decay scheduler with warmup"""
 
-    _target: Type = field(default_factory=lambda: ExponentialDecayScheduler)
+    _target: Type[ExponentialDecayScheduler] = field(default_factory=lambda: ExponentialDecayScheduler)
     """target class to instantiate"""
     lr_pre_warmup: float = 1e-8
     """Learning rate before warmup."""
@@ -145,7 +147,7 @@ class ExponentialDecayScheduler(Scheduler):
 class CosineDecaySchedulerConfig(SchedulerConfig):
     """Config for cosine decay schedule"""
 
-    _target: Type = field(default_factory=lambda: CosineDecayScheduler)
+    _target: Type[CosineDecayScheduler] = field(default_factory=lambda: CosineDecayScheduler)
     """target class to instantiate"""
     warm_up_end: int = 5000
     """Iteration number where warmp ends"""

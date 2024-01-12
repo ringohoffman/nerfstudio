@@ -30,11 +30,7 @@ import torch
 
 from nerfstudio.cameras import camera_utils
 from nerfstudio.cameras.cameras import Cameras, CameraType
-from nerfstudio.data.dataparsers.base_dataparser import (
-    DataParser,
-    DataParserConfig,
-    DataparserOutputs,
-)
+from nerfstudio.data.dataparsers.base_dataparser import DataParser, DataParserConfig, DataparserOutputs
 from nerfstudio.data.scene_box import SceneBox
 
 
@@ -117,7 +113,7 @@ def get_camera_params(
 class NeRFOSRDataParserConfig(DataParserConfig):
     """Nerfstudio dataset config"""
 
-    _target: Type = field(default_factory=lambda: NeRFOSR)
+    _target: Type[NeRFOSR] = field(default_factory=lambda: NeRFOSR)
     """target class to instantiate"""
     data: Path = Path("data/NeRF-OSR/Data/")
     """Directory specifying location of data."""

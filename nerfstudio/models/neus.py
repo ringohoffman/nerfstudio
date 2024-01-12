@@ -22,11 +22,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Type
 
 from nerfstudio.cameras.rays import RayBundle
-from nerfstudio.engine.callbacks import (
-    TrainingCallback,
-    TrainingCallbackAttributes,
-    TrainingCallbackLocation,
-)
+from nerfstudio.engine.callbacks import TrainingCallback, TrainingCallbackAttributes, TrainingCallbackLocation
 from nerfstudio.field_components.field_heads import FieldHeadNames
 from nerfstudio.model_components.ray_samplers import NeuSSampler
 from nerfstudio.models.base_surface_model import SurfaceModel, SurfaceModelConfig
@@ -36,7 +32,7 @@ from nerfstudio.models.base_surface_model import SurfaceModel, SurfaceModelConfi
 class NeuSModelConfig(SurfaceModelConfig):
     """NeuS Model Config"""
 
-    _target: Type = field(default_factory=lambda: NeuSModel)
+    _target: Type[NeuSModel] = field(default_factory=lambda: NeuSModel)
     num_samples: int = 64
     """Number of uniform samples"""
     num_samples_importance: int = 64
