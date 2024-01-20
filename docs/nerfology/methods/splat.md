@@ -17,7 +17,7 @@ To avoid confusion with the original paper, we refer to nerfstudio's implementat
 ```{button-link} https://docs.gsplat.studio/
 :color: primary
 :outline:
-GSplat 
+GSplat
 ```
 
 Nerfstudio uses [gsplat](https://github.com/nerfstudio-project/gsplat) as its gaussian rasterization backend, an in-house re-implementation which is designed to be more developer friendly. This can be installed with `pip install gsplat`. The associated CUDA code will be compiled the first time gsplat is executed. Some users with PyTorch 2.0 have experienced issues with this, which can be resolved by either installing gsplat from source, or upgrading torch to 2.1.
@@ -32,7 +32,7 @@ Because the method trains on *full images* instead of bundles of rays, there is 
 To run splatfacto, run `ns-train splatfacto --data <data>`. Just like NeRF methods, the splat can be interactively viewed in the web-viewer, loaded from a checkpoint, rendered, and exported.
 
 #### Quality and Regularization
-The default settings provided maintain a balance between speed, quality, and splat file size, but if you care more about quality than training speed or size, you can decrease the alpha cull threshold 
+The default settings provided maintain a balance between speed, quality, and splat file size, but if you care more about quality than training speed or size, you can decrease the alpha cull threshold
 (threshold to delete translucent gaussians) and disable culling after 15k steps like so: `ns-train splatfacto --pipeline.model.cull_alpha_thresh=0.005 --pipeline.model.continue_cull_post_densification=False --data <data>`
 
 A common artifact in splatting is long, spikey gaussians. [PhysGaussian](https://xpandora.github.io/PhysGaussian/) proposes a scale regularizer that encourages gaussians to be more evenly shaped. To enable this, set the `use_scale_regularization` flag to `True`.
@@ -46,8 +46,8 @@ Gaussian splats can be exported as a `.ply` file which are ingestable by a varie
 Nerfstudio's splat export currently supports multiple third-party splat viewers:
 - [Polycam Viewer](https://poly.cam/tools/gaussian-splatting)
 - [Playcanvas SuperSplat](https://playcanvas.com/super-splat)
-- [WebGL Viewer by antimatter15](https://antimatter15.com/splat/) 
-- [Spline](https://spline.design/) 
+- [WebGL Viewer by antimatter15](https://antimatter15.com/splat/)
+- [Spline](https://spline.design/)
 - [Three.js Viewer by mkkellogg](https://github.com/mkkellogg/GaussianSplats3D)
 
 ### FAQ
