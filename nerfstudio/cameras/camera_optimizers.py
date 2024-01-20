@@ -23,6 +23,7 @@ from dataclasses import dataclass, field
 from typing import Literal, Optional, Type, Union
 
 import torch
+import tyro
 from jaxtyping import Float, Int
 from torch import Tensor, nn
 from typing_extensions import assert_never
@@ -34,6 +35,52 @@ from nerfstudio.configs.base_config import InstantiateConfig
 from nerfstudio.engine.optimizers import OptimizerConfig
 from nerfstudio.engine.schedulers import SchedulerConfig
 from nerfstudio.utils import poses as pose_utils
+
+
+@dataclass
+class CameraOptimizerConfig(InstantiateConfig):
+    """Configuration of optimization for camera poses."""
+
+    _target: Type = field(default_factory=lambda: CameraOptimizer)
+
+    mode: Literal["off", "SO3xR3", "SE3"] = "off"
+    """Pose optimization strategy to use. If enabled, we recommend SO3xR3."""
+
+    trans_l2_penalty: float = 1e-2
+    """L2 penalty on translation parameters."""
+
+    rot_l2_penalty: float = 1e-3
+    """L2 penalty on rotation parameters."""
+
+    # tyro.conf.Suppress prevents us from creating CLI arguments for these fields.
+    optimizer: tyro.conf.Suppress[Optional[OptimizerConfig]] = field(default=None)
+    """Deprecated, now specified inside the optimizers dict"""
+
+    scheduler: tyro.conf.Suppress[Optional[SchedulerConfig]] = field(default=None)
+    """Deprecated, now specified inside the optimizers dict"""
+
+    def __post_init__(self):
+        if self.optimizer is not None:
+            import warnings
+
+            from nerfstudio.utils.rich_utils import CONSOLE
+
+            CONSOLE.print(
+                "\noptimizer is no longer specified in the CameraOptimizerConfig, it is now defined with the rest of the param groups inside the config file under the name 'camera_opt'\n",
+                style="bold yellow",
+            )
+            warnings.warn("above message coming from", FutureWarning, stacklevel=3)
+
+        if self.scheduler is not None:
+            import warnings
+
+            from nerfstudio.utils.rich_utils import CONSOLE
+
+            CONSOLE.print(
+                "\nscheduler is no longer specified in the CameraOptimizerConfig, it is now defined with the rest of the param groups inside the config file under the name 'camera_opt'\n",
+                style="bold yellow",
+            )
+            warnings.warn("above message coming from", FutureWarning, stacklevel=3)
 
 
 class CameraOptimizer(nn.Module):
@@ -140,48 +187,3 @@ class CameraOptimizer(nn.Module):
             param_groups["camera_opt"] = camera_opt_params
         else:
             assert len(camera_opt_params) == 0
-
-
-@dataclass
-class CameraOptimizerConfig(InstantiateConfig[CameraOptimizer]):
-    """Configuration of optimization for camera poses."""
-
-    _target: Type[CameraOptimizer] = CameraOptimizer
-
-    mode: Literal["off", "SO3xR3", "SE3"] = "off"
-    """Pose optimization strategy to use. If enabled, we recommend SO3xR3."""
-
-    trans_l2_penalty: float = 1e-2
-    """L2 penalty on translation parameters."""
-
-    rot_l2_penalty: float = 1e-3
-    """L2 penalty on rotation parameters."""
-
-    optimizer: Optional[OptimizerConfig] = field(default=None)
-    """Deprecated, now specified inside the optimizers dict"""
-
-    scheduler: Optional[SchedulerConfig] = field(default=None)
-    """Deprecated, now specified inside the optimizers dict"""
-
-    def __post_init__(self):
-        if self.optimizer is not None:
-            import warnings
-
-            from nerfstudio.utils.rich_utils import CONSOLE
-
-            CONSOLE.print(
-                "\noptimizer is no longer specified in the CameraOptimizerConfig, it is now defined with the rest of the param groups inside the config file under the name 'camera_opt'\n",
-                style="bold yellow",
-            )
-            warnings.warn("above message coming from", FutureWarning, stacklevel=3)
-
-        if self.scheduler is not None:
-            import warnings
-
-            from nerfstudio.utils.rich_utils import CONSOLE
-
-            CONSOLE.print(
-                "\nscheduler is no longer specified in the CameraOptimizerConfig, it is now defined with the rest of the param groups inside the config file under the name 'camera_opt'\n",
-                style="bold yellow",
-            )
-            warnings.warn("above message coming from", FutureWarning, stacklevel=3)

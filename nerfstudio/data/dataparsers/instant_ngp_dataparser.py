@@ -105,9 +105,7 @@ class InstantNGP(DataParser):
                     mask_filenames.append(mask_fname)
         if num_skipped_image_filenames >= 0:
             CONSOLE.print(f"Skipping {num_skipped_image_filenames} files in dataset split {split}.")
-        assert (
-            len(image_filenames) != 0
-        ), """
+        assert len(image_filenames) != 0, """
         No image files found.
         You should check the file_paths in the transforms.json file to make sure they are correct.
         """
